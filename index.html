@@ -1,24 +1,20 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Career Safety Net — We watch the job market for you, always</title>
-<meta name="description" content="A waitlist for background job matching and readiness. We watch the job market for you, always — matched to what you actually want.">
+<title>Fallback — Your next job, already lined up.</title>
+<meta name="description" content="Fallback keeps a matched shortlist of real job openings warm in the background, matched to what you actually want. A job-matching and readiness waitlist — not insurance.">
+<link rel="icon" type="image/webp" href="fallback-icon.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css"></head>
 <body>
-<header><strong>Career Safety Net</strong><span class="badge">Waitlist — not insurance</span><nav><a href="#how">How it works</a><a href="#join">Join the waitlist</a><a href="#faq">FAQ</a></nav></header>
+<header><a class="brand" href="index.html"><img src="fallback-icon.webp" alt="Fallback logo"><span>Fallback</span></a><span class="badge">Waitlist — not insurance</span><nav><a href="#how">How it works</a><a href="#join">Join the waitlist</a><a href="#faq">FAQ</a></nav></header>
 <main>
-<section class="hero"><h1>We watch the job market for you, always — matched to what you actually want.</h1>
-<p class="lead">Most people only start job hunting when they have to — stressed, rushed, and starting from zero. Career Safety Net flips that: tell us once what you'd actually want next, and (when we launch) we continuously look in the background, keep a standing shortlist warm, and help you stay ready. So if a job ends, you don't start from scratch — you start from a list.</p>
+<section class="hero">
+<img class="lockup" src="fallback-logo.webp" alt="Fallback — a figure landing in a net">
+<h1>Your next job, already lined up.</h1>
+<p class="lead">Tell us the work you'd want next, and we'll keep a shortlist of real openings matched to it — ready the day you need it, not started that day. Fallback is a job-matching service. It is not insurance and does not provide coverage, payouts, or income replacement.</p>
 <p class="notice"><strong>Important, plainly:</strong> This is a job-matching and readiness waitlist. It is <em>not</em> insurance. It does not provide coverage, payouts, or income replacement, and it does not promise you a job. Anyone who tells you otherwise about this product is wrong.</p>
-<a class="cta" href="#join">Join the waitlist</a></section>
-
-<section id="how"><h2>How it works</h2><div class="grid">
-<article><h3>1. Tell us what you want</h3><p>Roles, places (including remote), your pay floor, industries you like, and deal-breakers you want us to never send you. That's your preference profile — below, on this page.</p></article>
-<article><h3>2. Background matching</h3><p>Our matching engine checks free public job boards against your profile, scores each listing for role fit, location/remote fit and pay, and drops anything that hits a deal-breaker.</p></article>
-<article><h3>3. A standing shortlist</h3><p>Instead of a frantic search later, you maintain a current, ranked shortlist of real listings that already fit — updated as new jobs appear and old ones close.</p></article>
-<article><h3>4. Readiness, not panic</h3><p>Knowing your market, your floor, and your options in advance is the safety net: clarity and a head start, whenever you need it — whether you change jobs by choice or not.</p></article>
-</div></section>
-
-<section id="join"><h2>Join the waitlist — set your preferences</h2>
+<h2 class="join-title" id="join">Join the waitlist — set your preferences</h2>
 <p>Fill this in and you'll get a profile ID and a downloadable preference profile (JSON). The same JSON file is exactly what our matching engine consumes — download it, keep it, it's yours. Your entry is also saved in this browser (localStorage) so you can return and update it. No account, no payment.</p>
 <form id="intake">
 <label>Email for the waitlist *<input required type="email" name="email" placeholder="you@example.com"></label>
@@ -34,7 +30,7 @@
 <button type="submit">Join the waitlist</button>
 </form>
 <div id="confirmation" hidden>
-<h3>You're on the list ✓</h3>
+<h3>You're on the list <span class="tick">✓</span></h3>
 <p>Profile ID: <code id="profile-id"></code></p>
 <p>Save your preference profile — it's the exact file our matching engine reads:</p>
 <button id="download">Download my preference profile (JSON)</button>
@@ -43,6 +39,13 @@
 </div>
 </section>
 
+<section id="how"><h2>How it works</h2><div class="grid">
+<article><h3>1. Tell us what you want</h3><p>Roles, places (including remote), your pay floor, industries you like, and deal-breakers you want us to never send you. That's your preference profile — above, on this page.</p></article>
+<article><h3>2. Background matching</h3><p>Our matching engine checks free public job boards against your profile, scores each listing for role fit, location/remote fit and pay, and drops anything that hits a deal-breaker.</p></article>
+<article><h3>3. A standing shortlist</h3><p>Instead of a frantic search later, you maintain a current, ranked shortlist of real listings that already fit — updated as new jobs appear and old ones close.</p></article>
+<article><h3>4. Readiness, not panic</h3><p>Knowing your market, your floor, and your options in advance is the safety net: clarity and a head start, whenever you need it — whether you change jobs by choice or not.</p></article>
+</div></section>
+
 <section id="faq"><h2>FAQ</h2>
 <details><summary>Is this insurance?</summary><p>No. There is no policy, no coverage, no payout, and no income replacement. It's a matching and readiness service, currently a waitlist.</p></details>
 <details><summary>Does joining guarantee a job?</summary><p>No. It gives you a head start: a profile, ongoing matching when we launch, and a standing shortlist of real listings that fit what you said you want.</p></details>
@@ -50,6 +53,6 @@
 <details><summary>Where does my data go?</summary><p>On this static demo site, your profile is stored only in your own browser and in the JSON file you download. No server receives it from this page.</p></details>
 </section>
 </main>
-<footer><p>Career Safety Net (working title) — a career readiness concept. Not insurance. No coverage, payouts, or income replacement are offered or implied.</p></footer>
+<footer><p>Fallback — a career readiness and job-matching service. Not insurance. No coverage, payouts, or income replacement are offered or implied.</p></footer>
 <script src="app.js"></script>
 </body></html>
