@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Career Safety Net — We watch the job market for you, always</title>
+<meta name="description" content="A waitlist for background job matching and readiness. We watch the job market for you, always — matched to what you actually want.">
+<link rel="stylesheet" href="style.css"></head>
+<body>
+<header><strong>Career Safety Net</strong><span class="badge">Waitlist — not insurance</span><nav><a href="#how">How it works</a><a href="#join">Join the waitlist</a><a href="#faq">FAQ</a></nav></header>
+<main>
+<section class="hero"><h1>We watch the job market for you, always — matched to what you actually want.</h1>
+<p class="lead">Most people only start job hunting when they have to — stressed, rushed, and starting from zero. Career Safety Net flips that: tell us once what you'd actually want next, and (when we launch) we continuously look in the background, keep a standing shortlist warm, and help you stay ready. So if a job ends, you don't start from scratch — you start from a list.</p>
+<p class="notice"><strong>Important, plainly:</strong> This is a job-matching and readiness waitlist. It is <em>not</em> insurance. It does not provide coverage, payouts, or income replacement, and it does not promise you a job. Anyone who tells you otherwise about this product is wrong.</p>
+<a class="cta" href="#join">Join the waitlist</a></section>
+
+<section id="how"><h2>How it works</h2><div class="grid">
+<article><h3>1. Tell us what you want</h3><p>Roles, places (including remote), your pay floor, industries you like, and deal-breakers you want us to never send you. That's your preference profile — below, on this page.</p></article>
+<article><h3>2. Background matching</h3><p>Our matching engine checks free public job boards against your profile, scores each listing for role fit, location/remote fit and pay, and drops anything that hits a deal-breaker.</p></article>
+<article><h3>3. A standing shortlist</h3><p>Instead of a frantic search later, you maintain a current, ranked shortlist of real listings that already fit — updated as new jobs appear and old ones close.</p></article>
+<article><h3>4. Readiness, not panic</h3><p>Knowing your market, your floor, and your options in advance is the safety net: clarity and a head start, whenever you need it — whether you change jobs by choice or not.</p></article>
+</div></section>
+
+<section id="join"><h2>Join the waitlist — set your preferences</h2>
+<p>Fill this in and you'll get a profile ID and a downloadable preference profile (JSON). The same JSON file is exactly what our matching engine consumes — download it, keep it, it's yours. Your entry is also saved in this browser (localStorage) so you can return and update it. No account, no payment.</p>
+<form id="intake">
+<label>Email for the waitlist *<input required type="email" name="email" placeholder="you@example.com"></label>
+<label>Current role<input name="current_role" placeholder="e.g. Retail associate, Support rep, Warehouse lead"></label>
+<label>Desired roles / keywords * (comma-separated)<input required name="desired" placeholder="retail associate, sales associate, customer service"></label>
+<label>Extra keywords (comma-separated)<input name="keywords" placeholder="part-time, weekend, entry level"></label>
+<label>Locations (comma-separated)<input name="locations" placeholder="Ventura, CA, Camarillo, CA"></label>
+<label class="check"><input type="checkbox" name="remote_ok" checked> Remote work is OK / preferred</label>
+<div class="row"><label>Pay floor (amount)<input type="number" step="0.01" min="0" name="pay_amount" value="16.50"></label>
+<label>Per<select name="pay_unit"><option value="hour">hour</option><option value="year">year</option></select></label></div>
+<label>Industries you want (comma-separated)<input name="industries" placeholder="retail, healthcare, logistics"></label>
+<label>Deal-breakers — never send me these (comma-separated)<input name="deal_breakers" placeholder="food service, commission only, overnight"></label>
+<button type="submit">Join the waitlist</button>
+</form>
+<div id="confirmation" hidden>
+<h3>You're on the list ✓</h3>
+<p>Profile ID: <code id="profile-id"></code></p>
+<p>Save your preference profile — it's the exact file our matching engine reads:</p>
+<button id="download">Download my preference profile (JSON)</button>
+<button id="copy">Copy JSON</button>
+<pre id="preview"></pre>
+</div>
+</section>
+
+<section id="faq"><h2>FAQ</h2>
+<details><summary>Is this insurance?</summary><p>No. There is no policy, no coverage, no payout, and no income replacement. It's a matching and readiness service, currently a waitlist.</p></details>
+<details><summary>Does joining guarantee a job?</summary><p>No. It gives you a head start: a profile, ongoing matching when we launch, and a standing shortlist of real listings that fit what you said you want.</p></details>
+<details><summary>What does it cost?</summary><p>The waitlist is free. Any future paid subscription pricing will be announced before launch — nothing is charged now.</p></details>
+<details><summary>Where does my data go?</summary><p>On this static demo site, your profile is stored only in your own browser and in the JSON file you download. No server receives it from this page.</p></details>
+</section>
+</main>
+<footer><p>Career Safety Net (working title) — a career readiness concept. Not insurance. No coverage, payouts, or income replacement are offered or implied.</p></footer>
+<script src="app.js"></script>
+</body></html>
