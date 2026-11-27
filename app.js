@@ -4,8 +4,39 @@
 // devtools, and the downloaded profile is consumed by the matching engine,
 // so out-of-schema values (unknown pay units, negative pay, empty required
 // fields, unbounded strings) must never reach the stored profile.
+// ---- Intake delivery (VENTURE-INTAKE-DELIVERY-1) ----------------------
+// Waitlist profiles are delivered to the shared Office One intake
+// backend, which stores them durably and writes them into the matching
+// engine's profiles directory as engine inputs. localStorage remains
+// the offline fallback. PRODUCTION GATE: INTAKE_API_BASE points at the
+// reserved https://intake.invalid host until the intake service is
+// hosted (a signup/deploy step) — set window.INTAKE_API_BASE (or this
+// constant) to the hosted base URL in the same pass that updates
+// connect-src in index.html. While delivery is unreachable the visitor
+// is TOLD their profile is saved in this browser only — never a silent
+// loss: the localStorage copy is written BEFORE delivery is attempted.
+const INTAKE_API_BASE=(typeof window!=='undefined'&&window.INTAKE_API_BASE)||'https://intake.invalid';
+function deliverProfile(profile){
+ const ctl=(typeof AbortController!=='undefined')?new AbortController():null;
+ const timer=ctl?setTimeout(()=>ctl.abort(),6000):null;
+ return fetch(INTAKE_API_BASE+'/api/intake/fallback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(profile),signal:ctl?ctl.signal:undefined})
+  .then(r=>{if(timer)clearTimeout(timer);return r.ok})
+  .catch(()=>{if(timer)clearTimeout(timer);return false});
+}
 const MAX_ITEM=100, MAX_ITEMS=50, MAX_FIELD=500;
 const split = v => { const out=[]; const seen=new Set(); for(const s of (v||"").toString().split(",").map(x=>x.trim().slice(0,MAX_ITEM)).filter(Boolean)){ if(!seen.has(s)){ seen.add(s); out.push(s); if(out.length>=MAX_ITEMS) break; } } return out; };
+// Locations are "City, ST" entries (the form's own example is
+// "Ventura, CA, Camarillo, CA"): a plain comma split mangles each entry
+// into a city fragment and a bare state fragment the engine then tries
+// to match as standalone locations. Split on semicolons/newlines when
+// present; otherwise split on commas and re-join a trailing state-code
+// fragment (e.g. "CA") to the entry before it.
+const splitLocations = v => { const raw=(v||"").toString(); const out=[]; const seen=new Set();
+ const push=s=>{ s=s.trim().slice(0,MAX_ITEM); if(s&&!seen.has(s)){ seen.add(s); out.push(s); } };
+ if(/[;\n]/.test(raw)){ raw.split(/[;\n]+/).forEach(push); }
+ else { const parts=raw.split(",").map(x=>x.trim()).filter(Boolean);
+  for(const p of parts){ if(/^[A-Za-z]{2}$/.test(p)&&out.length){ const merged=out[out.length-1]+", "+p.toUpperCase(); seen.delete(out[out.length-1]); out[out.length-1]=merged.slice(0,MAX_ITEM); seen.add(out[out.length-1]); } else push(p); if(out.length>=MAX_ITEMS) break; } }
+ return out.slice(0,MAX_ITEMS); };
 const clean = v => (v||"").toString().trim().slice(0,MAX_FIELD);
 const $ = s => document.querySelector(s);
 function randSuffix(n){ try{ const a=new Uint8Array(n); crypto.getRandomValues(a); return [...a].map(b=>'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'[b%36]).join(''); }catch(e){ let s=''; while(s.length<n) s+=Math.random().toString(36).slice(2).toUpperCase().replace(/[^A-Z0-9]/g,''); return s.slice(0,n); } }
@@ -42,7 +73,7 @@ document.getElementById("intake").addEventListener("submit", e=>{
     current_role: clean(f.get("current_role")),
     desired_roles: desiredRoles,
     keywords: split(f.get("keywords")),
-    locations: split(f.get("locations")),
+    locations: splitLocations(f.get("locations")),
     remote_ok: !!f.get("remote_ok"),
     pay_floor:{ amount: amount, unit: unit, currency:"USD" },
     industries: split(f.get("industries")),
@@ -55,6 +86,13 @@ document.getElementById("intake").addEventListener("submit", e=>{
   try{ localStorage.setItem("csn-profile", JSON.stringify(profile)); }catch(err){}
   try{ localStorage.setItem("csn-waitlist-email", profile.email); }catch(err){}
   show(profile);
+  const statusEl=document.getElementById("delivery-status");
+  if(statusEl) statusEl.textContent="Sending your profile to Fallback…";
+  deliverProfile(profile).then(ok=>{ if(!statusEl) return;
+   statusEl.textContent=ok
+    ? "Received by Fallback — your profile has been delivered to our matching engine."
+    : "Your profile is saved in this browser only — we could not reach our waitlist system just now. Please download your preference profile (JSON) below and keep it; it is the same format our matching engine reads, so you can send it to us and we can load it directly.";
+  });
 });
 function show(p){
   if(!isValidProfile(p)) return;

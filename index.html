@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; object-src 'none'; base-uri 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; connect-src 'self' https://intake.invalid; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; object-src 'none'; base-uri 'self'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Fallback — Your next job, already lined up.</title>
 <meta name="description" content="Fallback keeps a matched shortlist of real job openings warm in the background, matched to what you actually want. A job-matching and readiness waitlist — not insurance.">
@@ -34,7 +34,8 @@
 <div id="confirmation" hidden>
 <h3>You're on the list <span class="tick">✓</span></h3>
 <p>Profile ID: <code id="profile-id"></code></p>
-<p>Save your preference profile — it's the exact file our matching engine reads:</p>
+<p id="delivery-status">Sending your profile to Fallback…</p>
+<p>Save your preference profile — it's the same format our matching engine reads, so if delivery ever fails you can send it to us and we can load it directly:</p>
 <button id="download">Download my preference profile (JSON)</button>
 <button id="copy">Copy JSON</button>
 <pre id="preview"></pre>
@@ -52,7 +53,7 @@
 <details><summary>Is this insurance?</summary><p>No. There is no policy, no coverage, no payout, and no income replacement. It's a matching and readiness service, currently a waitlist.</p></details>
 <details><summary>Does joining guarantee a job?</summary><p>No. It gives you a head start: a profile, ongoing matching when we launch, and a standing shortlist of real listings that fit what you said you want.</p></details>
 <details><summary>What does it cost?</summary><p>The waitlist is free. Any future paid subscription pricing will be announced before launch — nothing is charged now.</p></details>
-<details><summary>Where does my data go?</summary><p>On this static demo site, your profile is stored only in your own browser and in the JSON file you download. No server receives it from this page.</p></details>
+<details><summary>Where does my data go?</summary><p>Your profile is delivered to Fallback so our matching engine can work on it, and is also stored in your own browser and in the JSON file you download. If delivery cannot be completed, the confirmation above tells you it was saved in this browser only.</p></details>
 </section>
 </main>
 <footer><p>Fallback — a career readiness and job-matching service. Not insurance. No coverage, payouts, or income replacement are offered or implied.</p></footer>
